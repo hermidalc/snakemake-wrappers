@@ -51,7 +51,7 @@ sjdb_overhang = int(readlength) - 1 if readlength else 100
 extra = snakemake.params.get("extra", "")
 sjdb = snakemake.input.get("sjdb")
 if sjdb:
-    extra += f" --sjdbFileChrStartEnd '{sjdb}'"
+    extra += f" --sjdbFileChrStartEnd {sjdb}"
 
 with TemporaryDirectory() as tmp_dir:
     shell(
