@@ -48,9 +48,9 @@ if failed:
 adapters = snakemake.params.get("adapters", "")
 
 html = snakemake.output.get("html")
-assert html is not None, "input: html is a required input parameter"
+assert html is not None, "output: html is a required output parameter"
 json = snakemake.output.get("json")
-assert json is not None, "input: json is a required input parameter"
+assert json is not None, "output: json is a required output parameter"
 
 makedirs(dirname(html))
 

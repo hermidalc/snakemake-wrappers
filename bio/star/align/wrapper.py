@@ -25,7 +25,7 @@ if fq2:
     )
     assert len(fq1) == len(fq2), "input: equal number of files required for fq1 and fq2"
     fq2_str = ",".join(fq2)
-    fq_str = f"'{fq1_str} {fq2_str}'"
+    fq_str = f"'{fq1_str}' '{fq2_str}'"
 else:
     fq_str = f"'{fq1_str}'"
 
@@ -37,12 +37,16 @@ else:
 
 index = snakemake.input.get("index", snakemake.params.get("index", "GenomeDir/"))
 
+out_dir = snakemake.params.get("out_dir")
+assert out_dir is not None, "params: out_dir is a required parameter"
+
+
 gtf = snakemake.input.get("gtf")
 assert gtf is not None, "input: gtf is a required input parameter"
 assert gtf.endswith(".gtf"), "input: gtf extension not .gtf"
 
-readlength = snakemake.input.get("readlength")
-sjdb_overhang = readlength - 1 if readlength else "100"
+readlength = snakemake.params.get("readlength")
+sjdb_overhang = int(readlength) - 1 if readlength else 100
 
 extra = snakemake.params.get("extra", "")
 sjdb = snakemake.input.get("sjdb")
@@ -55,7 +59,7 @@ with TemporaryDirectory() as tmp_dir:
         " --runThreadN {snakemake.threads}"
         " --readFilesIn {fq_str}"
         " --genomeDir {index}"
-        " --outFileNamePrefix {tmp_dir}/"
+        " --outFileNamePrefix {out_dir}/"
         " --outTmpDir {tmp_dir}/tmp"
         " --sjdbGTFfile {gtf}"
         " --sjdbOverhang {sjdb_overhang}"
@@ -63,25 +67,3 @@ with TemporaryDirectory() as tmp_dir:
         " {extra}"
         " {log}"
     )
-
-    if "SortedByCoordinate" in extra:
-        bam_prefix = "Aligned.sortedByCoord.out"
-    else:
-        bam_prefix = "Aligned.out"
-
-    if snakemake.output.get("bam"):
-        shell("cat {tmpdir}/{bam_prefix}.bam > {snakemake.output.bam:q}")
-    if snakemake.output.get("sam"):
-        shell("cat {tmpdir}/{bam_prefix}.sam > {snakemake.output.sam:q}")
-    if snakemake.output.get("read_counts"):
-        shell("cat {tmpdir}/ReadsPerGene.out.tab > {snakemake.output.reads_per_gene:q}")
-    if snakemake.output.get("chim_junc"):
-        shell("cat {tmpdir}/Chimeric.out.junction > {snakemake.output.chim_junc:q}")
-    if snakemake.output.get("sj"):
-        shell("cat {tmpdir}/SJ.out.tab > {snakemake.output.sj:q}")
-    if snakemake.output.get("log"):
-        shell("cat {tmpdir}/Log.out > {snakemake.output.log:q}")
-    if snakemake.output.get("log_prog"):
-        shell("cat {tmpdir}/Log.progress.out > {snakemake.output.log_progress:q}")
-    if snakemake.output.get("log_final"):
-        shell("cat {tmpdir}/Log.final.out > {snakemake.output.log_final:q}")

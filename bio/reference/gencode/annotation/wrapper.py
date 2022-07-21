@@ -17,22 +17,22 @@ regions2suffix = {
 log = snakemake.log_fmt_shell(stdout=True, stderr=True)
 
 protocol = snakemake.params.get("protocol")
-assert protocol is not None, "input: protocol is a required input parameter"
+assert protocol is not None, "params: protocol is a required parameter"
 species = snakemake.params.get("species")
-assert species is not None, "input: species is a required input parameter"
+assert species is not None, "params: species is a required parameter"
 species = species.lower()
 release = snakemake.params.get("release")
-assert release is not None, "input: release is a required input parameter"
+assert release is not None, "params: release is a required  parameter"
 regions = snakemake.params.get("regions")
-assert regions is not None, "input: regions is a required input parameter"
+assert regions is not None, "params: regions is a required parameter"
 regions = regions.upper()
 assert (
     regions == "CHR" or regions in regions2suffix
-), f"input: regions {regions} is not valid"
+), f"params: regions {regions} is not valid"
 annot_fmt = snakemake.params.get("annot_fmt")
-assert annot_fmt is not None, "input: annot_fmt is a required input parameter"
+assert annot_fmt is not None, "params: annot_fmt is a required parameter"
 annot_fmt = annot_fmt.lower()
-assert annot_fmt in ("gtf", "gff3"), f"input: annot_fmt {annot_fmt} is not valid"
+assert annot_fmt in ("gtf", "gff3"), f"params: annot_fmt {annot_fmt} is not valid"
 
 base_url = f"{protocol}://ftp.ebi.ac.uk/pub/databases/gencode/"
 release_url = join(base_url, f"Gencode_{species}", f"release_{release}")

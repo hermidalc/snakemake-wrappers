@@ -16,20 +16,20 @@ regions2suffix = {
 log = snakemake.log_fmt_shell(stdout=True, stderr=True)
 
 protocol = snakemake.params.get("protocol")
-assert protocol is not None, "input: protocol is a required input parameter"
+assert protocol is not None, "params: protocol is a required parameter"
 species = snakemake.params.get("species")
-assert species is not None, "input: species is a required input parameter"
+assert species is not None, "params: species is a required parameter"
 species = species.lower()
 release = snakemake.params.get("release")
-assert release is not None, "input: release is a required input parameter"
+assert release is not None, "params: release is a required parameter"
 build = snakemake.params.get("build")
-assert build is not None, "input: build is a required input parameter"
+assert build is not None, "params: build is a required parameter"
 regions = snakemake.params.get("regions")
-assert regions is not None, "input: regions is a required input parameter"
+assert regions is not None, "params: regions is a required parameter"
 regions = regions.upper()
 assert (
     regions == "ALL" or regions in regions2suffix
-), f"input: regions {regions} is not valid"
+), f"params: regions {regions} is not valid"
 
 base_url = f"{protocol}://ftp.ebi.ac.uk/pub/databases/gencode/"
 release_url = join(base_url, f"Gencode_{species}", f"release_{release}")
