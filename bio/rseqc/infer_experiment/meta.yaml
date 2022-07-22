@@ -1,0 +1,6 @@
+name: "rseqc inter_experiment"
+description: RSeQC inter_experiment.py experiment strandedness
+authors:
+  - Leandro C. Hermida
+notes: |
+  * For more information, see http://rseqc.sourceforge.net/#infer-experiment-py

@@ -15,4 +15,4 @@ if fq2:
 else:
     in2 = ""
 
-shell("readlength.sh in='{fq1}' {in2} bin=1 out='{snakemake.output}'")
+shell("readlength.sh in='{fq1}' {in2} bin=1 out='{snakemake.output}' {log}")

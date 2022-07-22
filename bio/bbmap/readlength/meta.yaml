@@ -1,6 +1,6 @@
-name: "bbmap-readlength"
+name: "bbmap readlength"
 description: Generate read length histogram with BBMap readLength.sh
 authors:
   - Leandro C. Hermida
 notes: |
-  * For more information, see https://sourceforge.net/projects/bbmap/
+  * For more information, see https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbmap-guide/
