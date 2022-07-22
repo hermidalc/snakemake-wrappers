@@ -5,7 +5,7 @@ __license__ = "BSD 3-Clause"
 import gffutils
 
 db_file = snakemake.output.get("db")
-assert db is not None, "output: db is a required output parameter"
+assert db_file is not None, "output: db is a required output parameter"
 bed_file = snakemake.output.get("bed")
 assert bed_file is not None, "ouitput: bed is a required output parameter"
 
