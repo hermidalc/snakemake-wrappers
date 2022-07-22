@@ -2,6 +2,7 @@ __author__ = "Leandro C. Hermida"
 __email__ = "hermidalc@pitt.edu"
 __license__ = "BSD 3-Clause"
 
+import re
 from tempfile import TemporaryDirectory
 from snakemake.shell import shell
 
@@ -46,6 +47,14 @@ assert gtf is not None, "input: gtf is a required input parameter"
 assert gtf.endswith(".gtf"), "input: gtf extension not .gtf"
 
 readlength = snakemake.params.get("readlength")
+if readlength is None:
+    readlength_file = snakemake.input.get("readlength")
+    assert (
+        readlength_file is not None
+    ), "input/params: readlength is a required parameter"
+    with open(readlength_file, "r") as fh:
+        readlength = re.sub("\D+", "", fh.readline())
+
 sjdb_overhang = int(readlength) - 1 if readlength else 100
 
 extra = snakemake.params.get("extra", "")
