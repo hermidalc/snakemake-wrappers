@@ -3,7 +3,10 @@ __email__ = "hermidalc@pitt.edu"
 __license__ = "BSD 3-Clause"
 
 import re
+from os.path import join
+from shutil import rmtree
 from tempfile import TemporaryDirectory
+
 from snakemake.shell import shell
 
 log = snakemake.log_fmt_shell(stdout=True, stderr=True)
@@ -76,3 +79,5 @@ with TemporaryDirectory() as tmp_dir:
         " {extra}"
         " {log}"
     )
+
+rmtree(join(out_dir, "_STARgenome"), ignore_errors=True)
