@@ -54,7 +54,9 @@ with open(snakemake.log[0], "w") as f_log:
 
     if np.all(percents < unstranded_p_thres):
         stranded = 0
-    elif np.any(percents < unstranded_p_thres) and np.any(percents > stranded_p_thres):
+    elif np.any(percents > stranded_p_thres) and np.any(
+        percents < 100 - stranded_p_thres
+    ):
         stranded = np.where(percents > stranded_p_thres)[0][0] + 1
     else:
         raise ValueError("Cannot determine strandedness from output file")
