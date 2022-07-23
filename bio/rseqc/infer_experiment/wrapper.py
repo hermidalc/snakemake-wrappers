@@ -16,14 +16,14 @@ assert bed is not None, "input: bed is a required input parameter"
 bam = snakemake.input.get("bam")
 assert bam is not None, "input: bam is a required input parameter"
 
-infer = snakemake.output.get("infer")
-assert infer is not None, "output: infer is a required output parameter"
-strand = snakemake.output.get("strand")
-assert strand is not None, "output: strand is a required output parameter"
+infer_file = snakemake.output.get("infer")
+assert infer_file is not None, "output: infer is a required output parameter"
+strand_file = snakemake.output.get("strand")
+assert strand_file is not None, "output: strand is a required output parameter"
 
 sample_size = snakemake.params.get("sample_size", 200000)
 
-shell("infer_experiment.py -r {bed} -i {bam} -s {sample_size} > {infer} {log}")
+shell("infer_experiment.py -r {bed} -i {bam} -s {sample_size} > {infer_file} {log}")
 
 # Example:
 #
@@ -61,7 +61,7 @@ with open(snakemake.log[0], "w") as f_log:
     else:
         raise ValueError("Cannot determine strandedness from output file")
 
-    with open(strand, "w") as f_out:
+    with open(strand_file, "w") as f_out:
         f_out.write(
             "forward" if stranded == 1 else "reverse" if stranded == 2 else "no"
         )
