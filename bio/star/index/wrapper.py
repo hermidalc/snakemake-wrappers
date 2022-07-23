@@ -14,8 +14,8 @@ assert fastas is not None, "input: fastas is a required input parameter"
 fastas = [fastas] if isinstance(fastas, str) else fastas
 fastas = [f"'{f}'" for f in fastas]
 
-gtf = snakemake.input.get("gtf")
-if gtf is not None:
+gtf = snakemake.input.get("gtf", "")
+if gtf:
     assert gtf.endswith((".gtf", ".gff3")), "input: gtf extension not .gtf/gff3"
     gtf = f"--sjdbGTFfile {gtf}"
     if gtf.endswith(".gff3"):

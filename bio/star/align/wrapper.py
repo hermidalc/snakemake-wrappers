@@ -33,19 +33,15 @@ if fq2:
 else:
     fq_str = f"'{fq1_str}'"
 
-
-if fq1[0].endswith(".gz"):
-    readcmd = "--readFilesCommand zcat"
-else:
-    readcmd = ""
-
 index = snakemake.input.get("index", snakemake.params.get("index", "GenomeDir/"))
 
 out_dir = snakemake.params.get("out_dir")
 assert out_dir is not None, "params: out_dir is a required parameter"
 
-gtf = snakemake.input.get("gtf")
-if gtf is not None:
+readcmd = "--readFilesCommand zcat" if fq1[0].endswith(".gz") else ""
+
+gtf = snakemake.input.get("gtf", "")
+if gtf:
     assert gtf.endswith((".gtf", ".gff3")), "input: gtf extension not .gtf/gff3"
     gtf = f"--sjdbGTFfile {gtf}"
     if gtf.endswith(".gff3"):
