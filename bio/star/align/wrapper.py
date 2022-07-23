@@ -52,7 +52,7 @@ if read_length is None:
     read_length_file = snakemake.input.get("read_length")
     assert (
         read_length_file is not None
-    ), "input/params: read length is a required parameter"
+    ), "input/params: read_length is a required parameter"
     with open(read_length_file, "r") as fh:
         read_length = re.sub("\D+", "", fh.readline())
 
