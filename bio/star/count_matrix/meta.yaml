@@ -1,0 +1,6 @@
+name: "star count_matrix"
+description: STAR count matrix generation from individual files and library strand-specific info
+authors:
+  - Leandro C. Hermida
+notes: |
+  * For more information, see https://github.com/alexdobin/STAR
