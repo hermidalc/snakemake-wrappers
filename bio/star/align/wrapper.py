@@ -75,7 +75,6 @@ with TemporaryDirectory() as tmp_dir:
         " --genomeDir {index}"
         " --outFileNamePrefix {out_dir}/"
         " --outTmpDir {tmp_dir}/tmp"
-        " --sjdbGTFfile {gtf}"
         " --sjdbOverhang {sjdb_overhang}"
         " {readcmd}"
         " {gtf}"
