@@ -8,6 +8,19 @@ from snakemake.utils import makedirs
 
 log = snakemake.log_fmt_shell(stdout=True, stderr=True)
 
+fastas = snakemake.input.get("fastas")
+assert fastas is not None, "input: fastas is a required input parameter"
+
+fastas = [fastas] if isinstance(fastas, str) else fastas
+fastas = [f"'{f}'" for f in fastas]
+
+gtf = snakemake.input.get("gtf")
+if gtf is not None:
+    assert gtf.endswith((".gtf", ".gff3")), "input: gtf extension not .gtf/gff3"
+    gtf = f"--sjdbGTFfile {gtf}"
+    if gtf.endswith(".gff3"):
+        gtf += " --sjdbGTFtagExonParentTranscript Parent"
+
 extra = snakemake.params.get("extra", "")
 
 makedirs(snakemake.output[0])
@@ -17,9 +30,10 @@ with TemporaryDirectory() as tmp_dir:
         "STAR"
         " --runThreadN {snakemake.threads}"
         " --runMode genomeGenerate"
-        " --genomeFastaFiles {snakemake.input}"
+        " --genomeFastaFiles {fastas}"
         " --genomeDir {snakemake.output}"
         " --outTmpDir {tmp_dir}/tmp"
+        " {gtf}"
         " {extra}"
         " {log}"
     )

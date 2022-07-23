@@ -44,21 +44,23 @@ index = snakemake.input.get("index", snakemake.params.get("index", "GenomeDir/")
 out_dir = snakemake.params.get("out_dir")
 assert out_dir is not None, "params: out_dir is a required parameter"
 
-
 gtf = snakemake.input.get("gtf")
-assert gtf is not None, "input: gtf is a required input parameter"
-assert gtf.endswith(".gtf"), "input: gtf extension not .gtf"
+if gtf is not None:
+    assert gtf.endswith((".gtf", ".gff3")), "input: gtf extension not .gtf/gff3"
+    gtf = f"--sjdbGTFfile {gtf}"
+    if gtf.endswith(".gff3"):
+        gtf += " --sjdbGTFtagExonParentTranscript Parent"
 
-readlength = snakemake.params.get("readlength")
-if readlength is None:
-    readlength_file = snakemake.input.get("readlength")
+read_length = snakemake.params.get("read_length")
+if read_length is None:
+    read_length_file = snakemake.input.get("read_length")
     assert (
-        readlength_file is not None
-    ), "input/params: readlength is a required parameter"
-    with open(readlength_file, "r") as fh:
-        readlength = re.sub("\D+", "", fh.readline())
+        read_length_file is not None
+    ), "input/params: read length is a required parameter"
+    with open(read_length_file, "r") as fh:
+        read_length = re.sub("\D+", "", fh.readline())
 
-sjdb_overhang = int(readlength) - 1 if readlength else 100
+sjdb_overhang = int(read_length) - 1 if read_length else 100
 
 extra = snakemake.params.get("extra", "")
 sj = snakemake.input.get("sj")
@@ -76,6 +78,7 @@ with TemporaryDirectory() as tmp_dir:
         " --sjdbGTFfile {gtf}"
         " --sjdbOverhang {sjdb_overhang}"
         " {readcmd}"
+        " {gtf}"
         " {extra}"
         " {log}"
     )
