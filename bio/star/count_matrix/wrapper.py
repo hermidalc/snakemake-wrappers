@@ -23,11 +23,13 @@ else:
 count_matrix = pd.DataFrame()
 for count_file, sample_name, strand in zip(count_files, sample_names, strands):
     strand_idx = 1 if strand in ("forward", "yes") else 2 if strand == "reverse" else 0
-    counts = pd.read_csv(sep="\t", header=None, index_col=0, usecols=[0, strand_idx])
+    counts = pd.read_csv(
+        count_file, sep="\t", header=None, index_col=0, usecols=[0, strand_idx]
+    )
     counts.columns = [sample_name]
     count_matrix = pd.concat([count_matrix, counts], axis=1, verify_integrity=True)
     assert count_matrix.shape[0] == counts.shape[0], "Count files do not have same rows"
 
-count_matrix = count_matrix.loc[not count_matrix.index.str.startswith("N_")]
+count_matrix = count_matrix.loc[~count_matrix.index.str.startswith("N_")]
 count_matrix.index.name = "ID_REF"
 count_matrix.to_csv(snakemake.output[0], sep="\t")
