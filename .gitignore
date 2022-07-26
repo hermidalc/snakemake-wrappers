@@ -1,6 +1,3 @@
 docs/wrappers
 __pycache__
 .snakemake
-.DS_Store
-.cache
-.idea
