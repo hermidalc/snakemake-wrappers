@@ -52,8 +52,8 @@ assert html is not None, "output: html is a required output parameter"
 json = snakemake.output.get("json")
 assert json is not None, "output: json is a required output parameter"
 
-id = snakemake.params.get("id")
-title = f"{id} fastp report" if id else "fastp report"
+run_id = snakemake.params.get("run_id")
+title = f"{run_id} fastp report" if run_id else "fastp report"
 
 makedirs(dirname(html))
 
