@@ -66,6 +66,6 @@ shell(
     " {extra}"
     " --html {html}"
     " --json {json}"
-    " --report_title {title}"
+    " --report_title {title:q}"
     " {log}"
 )
