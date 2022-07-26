@@ -21,7 +21,7 @@ assert infer_file is not None, "output: infer is a required output parameter"
 strand_file = snakemake.output.get("strand")
 assert strand_file is not None, "output: strand is a required output parameter"
 
-sample_size = str(int(snakemake.params.get("sample_size", 2e5)))
+sample_size = str(int(float(snakemake.params.get("sample_size", 2e5))))
 
 shell("infer_experiment.py -r {bed} -i {bam} -s {sample_size} > {infer_file} {log}")
 
