@@ -1,0 +1,4 @@
+name: "gtf gene_annot"
+description: GTF gene annotation extraction
+authors:
+  - Leandro C. Hermida
