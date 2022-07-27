@@ -4,6 +4,8 @@ __license__ = "BSD 3-Clause"
 
 import gffutils
 
+print("Converting GTF to BED", flush=True)
+
 db_file = snakemake.output.get("db")
 assert db_file is not None, "output: db is a required output parameter"
 bed_file = snakemake.output.get("bed")
