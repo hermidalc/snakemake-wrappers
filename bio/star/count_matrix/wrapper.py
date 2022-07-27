@@ -20,16 +20,23 @@ else:
         with open(strand_file, "r") as fh:
             strands.append(fh.readline().strip())
 
-count_matrix = pd.DataFrame()
+count_df = pd.DataFrame()
 for count_file, sample_name, strand in zip(count_files, sample_names, strands):
     strand_idx = 2 if strand in ("forward", "yes") else 3 if strand == "reverse" else 1
     counts = pd.read_csv(
         count_file, sep="\t", header=None, index_col=0, usecols=[0, strand_idx]
     )
     counts.columns = [sample_name]
-    count_matrix = pd.concat([count_matrix, counts], axis=1, verify_integrity=True)
-    assert count_matrix.shape[0] == counts.shape[0], "Count files do not have same rows"
+    count_df = pd.concat([count_df, counts], axis=1, verify_integrity=True)
+    assert count_df.shape[0] == counts.shape[0], "Count files do not have same rows"
 
-count_matrix = count_matrix.loc[~count_matrix.index.str.startswith("N_")]
-count_matrix.index.name = "ID_REF"
-count_matrix.to_csv(snakemake.output[0], sep="\t")
+count_df = count_df.loc[~count_df.index.str.startswith("N_")]
+count_df.index.name = "ID_REF"
+
+out_file = snakemake.output[0]
+if count_df.columns.duplicated().any():
+    print(f"Collapsing {out_file} technical replicates", flush=True)
+    count_df = count_df.groupby(count_df.columns, axis=1).sum()
+
+count_df.sort_index(inplace=True)
+count_df.to_csv(out_file, sep="\t")
