@@ -13,13 +13,13 @@ sink(log)
 sink(log, type = "message")
 
 adata <- read.delim(
-    snakemake@input[["adata"]], sep = "\t", header = TRUE, row.names = 1
+    snakemake@input[["assay"]], sep = "\t", header = TRUE, row.names = 1
 )
 pdata <- read.delim(
-    snakemake@input[["pdata"]], sep = "\t", header = TRUE, row.names = 1
+    snakemake@input[["pheno"]], sep = "\t", header = TRUE, row.names = 1
 )
 fdata <- read.delim(
-    snakemake@input[["fdata"]], sep = "\t", header = TRUE, row.names = 1
+    snakemake@input[["annot"]], sep = "\t", header = TRUE, row.names = 1
 )
 
 eset <- ExpressionSet(
