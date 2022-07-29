@@ -34,6 +34,7 @@ count_df = count_df.loc[~count_df.index.str.startswith("N_")]
 count_df.index.name = "ID_REF"
 
 out_file = snakemake.output[0]
+
 if count_df.columns.duplicated().any():
     print(f"Collapsing {out_file} technical replicates", flush=True)
     count_df = count_df.groupby(count_df.columns, axis=1).sum()
