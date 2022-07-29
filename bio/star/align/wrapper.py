@@ -72,7 +72,7 @@ with TemporaryDirectory(dir=tmp_base_dir) as tmp_dir:
         " --readFilesIn {fq_str}"
         " --genomeDir {index}"
         " --outFileNamePrefix {out_dir}/"
-        " --outTmpDir {tmp_dir}"
+        " --outTmpDir {tmp_dir}/tmp"
         " --sjdbOverhang {sjdb_overhang}"
         " {readcmd}"
         " {gtf}"
