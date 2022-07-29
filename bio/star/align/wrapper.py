@@ -5,7 +5,7 @@ __license__ = "BSD 3-Clause"
 import re
 from os.path import join
 from shutil import rmtree
-from tempfile import TemporaryDirectory
+from tempfile import gettempdir, TemporaryDirectory
 
 from snakemake.shell import shell
 
@@ -63,14 +63,16 @@ sj = snakemake.input.get("sj")
 if sj:
     extra += f" --sjdbFileChrStartEnd {sj}"
 
-with TemporaryDirectory() as tmp_dir:
+tmp_base_dir = snakemake.params.get("tmp_dir", gettempdir())
+
+with TemporaryDirectory(dir=tmp_base_dir) as tmp_dir:
     shell(
         "STAR"
         " --runThreadN {snakemake.threads}"
         " --readFilesIn {fq_str}"
         " --genomeDir {index}"
         " --outFileNamePrefix {out_dir}/"
-        " --outTmpDir {tmp_dir}/tmp"
+        " --outTmpDir {tmp_dir}"
         " --sjdbOverhang {sjdb_overhang}"
         " {readcmd}"
         " {gtf}"
