@@ -1,5 +1,5 @@
 name: "star index"
-description: Genome indexing with STAR
+description: STAR genome index creation
 authors:
   - Leandro C. Hermida
 notes: |
