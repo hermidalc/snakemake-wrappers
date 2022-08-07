@@ -46,7 +46,7 @@ gz_file_url = join(release_url, gz_filename)
 gz_file = urlretrieve(gz_file_url)[0]
 
 name2md5 = {}
-md5sums_url = join(join(release_url, "MD5SUMS"))
+md5sums_url = join(release_url, "MD5SUMS")
 md5sums_file = urlretrieve(md5sums_url)[0]
 with open(md5sums_file, "r") as fh:
     for line in fh:
