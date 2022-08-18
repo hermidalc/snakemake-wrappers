@@ -26,7 +26,7 @@ extra = snakemake.params.get("extra", "")
 
 makedirs(snakemake.output[0])
 
-tmp_base_dir = snakemake.params.get("tmp_dir", gettempdir())
+tmp_base_dir = snakemake.resources.get("tmp_dir", gettempdir())
 
 with TemporaryDirectory(dir=tmp_base_dir) as tmp_dir:
     shell(
