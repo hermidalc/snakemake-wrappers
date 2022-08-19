@@ -5,7 +5,6 @@ __license__ = "BSD 3-Clause"
 from tempfile import gettempdir, TemporaryDirectory
 
 from snakemake.shell import shell
-from snakemake.utils import makedirs
 
 log = snakemake.log_fmt_shell(stdout=True, stderr=True)
 
@@ -23,8 +22,6 @@ if gtf:
         gtf += " --sjdbGTFtagExonParentTranscript Parent"
 
 extra = snakemake.params.get("extra", "")
-
-makedirs(snakemake.output[0])
 
 tmp_base_dir = snakemake.resources.get("tmp_dir", gettempdir())
 
