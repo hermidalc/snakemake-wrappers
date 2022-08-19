@@ -18,7 +18,7 @@ gtf = snakemake.input.get("gtf", "")
 if gtf:
     assert gtf.endswith((".gtf", ".gff3")), "input: gtf extension not .gtf/gff3"
     gtf = f"--sjdbGTFfile {gtf}"
-    if gtf.endswith(".gff3"):
+    if gtf.endswith((".gff", ".gff3")):
         gtf += " --sjdbGTFtagExonParentTranscript Parent"
 
 extra = snakemake.params.get("extra", "")
