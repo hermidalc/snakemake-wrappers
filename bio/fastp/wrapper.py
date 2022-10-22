@@ -3,15 +3,13 @@ __email__ = "hermidalc@pitt.edu"
 __license__ = "BSD 3-Clause"
 
 import re
-from os.path import dirname
 
 from snakemake.shell import shell
 
 log = snakemake.log_fmt_shell(stdout=True, stderr=True)
-extra = snakemake.params.get("extra", "")
 
-fq1 = snakemake.input.get("fq1")
-assert fq1 is not None, "input: fq1 is a required input parameter"
+fq1 = snakemake.input.get("fq") or snakemake.input.get("fq1")
+assert fq1 is not None, "input: fq/fq1 is a required input parameter"
 in_fqs = f"--in1 {fq1}"
 
 fq2 = snakemake.input.get("fq2")
@@ -45,6 +43,8 @@ if failed:
     out_fqs += f" --failed_out {failed}"
 
 adapters = snakemake.params.get("adapters", "")
+
+extra = snakemake.params.get("extra", "")
 
 html = snakemake.output.get("html")
 assert html is not None, "output: html is a required output parameter"
