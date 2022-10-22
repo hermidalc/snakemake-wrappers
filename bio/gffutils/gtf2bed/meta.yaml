@@ -1,4 +1,4 @@
-name: "gffutils gtf2bed"
+name: gffutils gtf2bed
 description: GFFUtils gtf2bed conversion
 authors:
   - Leandro C. Hermida

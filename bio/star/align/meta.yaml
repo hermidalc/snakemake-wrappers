@@ -1,4 +1,4 @@
-name: "star align"
+name: star align
 description: Bulk RNA-seq read alignment and quantification with STAR
 authors:
   - Leandro C. Hermida

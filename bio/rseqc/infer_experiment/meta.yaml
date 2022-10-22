@@ -1,4 +1,4 @@
-name: "rseqc inter_experiment"
+name: rseqc inter_experiment
 description: RSeQC inter_experiment.py experiment strandedness
 authors:
   - Leandro C. Hermida

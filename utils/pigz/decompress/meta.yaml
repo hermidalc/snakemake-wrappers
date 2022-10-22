@@ -1,4 +1,4 @@
-name: "pigz decompress"
+name: pigz decompress
 description: Fast file decompression
 authors:
   - Leandro C. Hermida
