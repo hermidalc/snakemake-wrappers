@@ -1,9 +1,10 @@
 # __author__ = "Leandro C. Hermida"
 # __email__ = "hermidalc@pitt.edu"
-# __license__ = "BSD 3-Clause"
+# __license__ = "MIT"
 
 suppressPackageStartupMessages({
     library(Biobase)
+    library(data.table)
 })
 
 # Sink the stderr and stdout to the snakemake log file
@@ -12,10 +13,7 @@ log <- file(snakemake@log[[1]], open = "wt")
 sink(log)
 sink(log, type = "message")
 
-adata <- read.delim(
-    snakemake@input[["assay"]],
-    sep = "\t", header = TRUE, row.names = 1
-)
+adata <- fread(snakemake@input[["assay"]], header = TRUE)
 pdata <- read.delim(
     snakemake@input[["pheno"]],
     sep = "\t", header = TRUE,
@@ -27,7 +25,7 @@ fdata <- read.delim(
 )
 
 eset <- ExpressionSet(
-    assayData = as.matrix(adata),
+    assayData = as.matrix(adata, rownames = 1),
     phenoData = AnnotatedDataFrame(pdata),
     featureData = AnnotatedDataFrame(fdata),
 )
